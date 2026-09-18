@@ -1,0 +1,217 @@
+/**
+ * 中文排版基线样式
+ * ============================================================
+ * VitePress 默认主题按英文排版调优：行高偏紧、字距偏开、
+ * 中西文之间没有空隙。中文正文在同样设置下会显得"挤且糊"。
+ *
+ * 这个文件只做一件事：把默认主题改造成适合中文阅读的排版，
+ * 不改变任何功能。删掉 index.ts 里的 import 即可回到官方默认外观。
+ */
+
+:root {
+  /**
+   * 字体族必须把中文衬线/黑体放在系统 UI 字体之后，
+   * 让拉丁字母和数字仍然走 Inter/系统字体（更好看），
+   * 中文回退到各平台的默认中文字体。
+   */
+  --vp-font-family-base:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI',
+    'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC',
+    'WenQuanYi Micro Hei', sans-serif;
+
+  /* 代码里的中文也要能看清，否则注释会变成方块 */
+  --vp-font-family-mono:
+    ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, Consolas,
+    'Liberation Mono', 'Microsoft YaHei Mono', 'PingFang SC', monospace;
+
+  /* 中文行高：1.7 左右是长文阅读的舒适区，英文的 1.5 偏紧 */
+  --vp-layout-max-width: 1440px;
+}
+
+/* ── 正文 ─────────────────────────────────────────────────── */
+
+.vp-doc {
+  line-height: 1.75;
+  /* 中文正文用 16px 是下限，15px 以下在 Windows 上会明显吃力 */
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .vp-doc {
+    font-size: 16.5px;
+  }
+}
+
+/* 中文标题不宜过疏，标题字号越大越要收紧字距 */
+.vp-doc h1 {
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.vp-doc h2 {
+  line-height: 1.4;
+  letter-spacing: -0.008em;
+  /* 长文档靠章节间距建立层次，中文段间距要比英文更大 */
+  margin-top: 40px;
+  padding-top: 24px;
+}
+
+.vp-doc h3,
+.vp-doc h4 {
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* 段落之间留白，避免整页糊成一块 */
+.vp-doc p,
+.vp-doc li {
+  margin: 14px 0;
+}
+
+.vp-doc li > p {
+  margin: 6px 0;
+}
+
+/* 列表缩进：中文项目符号 + 缩进过小会贴住正文 */
+.vp-doc ul,
+.vp-doc ol {
+  padding-left: 1.6em;
+}
+
+.vp-doc li + li {
+  margin-top: 6px;
+}
+
+/* ── 中西文自动间距 ─────────────────────────────────────────
+ * 在"中文与英文/数字相邻"处自动加入约 1/4 字宽的间隙。
+ * 这是中文排版规范（GB/T 15834）要求的效果，浏览器原生支持，
+ * 无需在 Markdown 里手打空格。
+ * ⚠️ 不要写成 `* { text-spacing-trim: ... }`，那会破坏中文全角标点
+ *    的悬挂效果，只加在正文容器上。
+ */
+.vp-doc :is(p, li, dd, dt, blockquote, td, th) {
+  text-spacing-trim: space-first;
+}
+
+/* 代码、路径等行内元素不该被误判成需要间距的拉丁文本 */
+.vp-doc code,
+.vp-doc a {
+  text-spacing-trim: normal;
+}
+
+/* ── 行内代码 ───────────────────────────────────────────────
+ * 中文文档里行内代码出现频率极高（配置项名、文件名、命令），
+ * 默认样式字号偏小、上下标点容易被挤压，这里统一放大一点。
+ */
+.vp-doc :not(pre) > code {
+  font-size: 0.875em;
+  /* 允许在长路径处断行，避免撑破窄屏 */
+  overflow-wrap: anywhere;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+/* ── 链接 ───────────────────────────────────────────────────
+ * 中文正文里的链接默认只有颜色区分，扫读时容易漏掉，
+ * 用细下划线增强可发现性。
+ */
+.vp-doc a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 500;
+}
+
+.vp-doc a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ── 引用块 ─────────────────────────────────────────────────
+ * 中文引用常包含大段说明文字，左边框 + 稍大行高更好读。
+ */
+.vp-doc blockquote {
+  line-height: 1.8;
+  padding: 2px 0 2px 18px;
+}
+
+.vp-doc blockquote > p {
+  font-size: 1em;
+}
+
+/* ── 表格 ───────────────────────────────────────────────────
+ * 中文表格最常见的翻车点：单元格不换行导致整表溢出。
+ * 这里允许换行 + 收敛最小宽度，并让表头不随页面滚动跑掉。
+ */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.vp-doc th,
+.vp-doc td {
+  /* 中文优先按字断行，不要只按空格断 */
+  word-break: break-word;
+  line-height: 1.65;
+  padding: 10px 14px;
+}
+
+.vp-doc th {
+  white-space: nowrap;
+}
+
+/* ── 自定义容器 ─────────────────────────────────────────────
+ * TIP/WARNING/DANGER 的中文标题（见 config.mts 的 container 配置）
+ * 是中文字符，需要稍大一点的行高避免顶部贴边。
+ */
+.vp-doc .custom-block {
+  line-height: 1.75;
+}
+
+.vp-doc .custom-block-title {
+  font-weight: 600;
+}
+
+.vp-doc .custom-block p {
+  margin: 8px 0;
+}
+
+/* ── 首页 Hero 区 ───────────────────────────────────────────
+ * 中文主标题一般比英文短，默认字号会显得过大且字距松。
+ */
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.02em;
+}
+
+.VPHero .tagline {
+  line-height: 1.7;
+  /* 中文副标题通常较长，限制最大宽度提升可读性 */
+  max-width: 42ch;
+}
+
+/* ── 侧边栏与导航 ───────────────────────────────────────────
+ * 中文菜单项字数少但字面宽，行高需要比英文略大。
+ */
+.VPSidebarItem .text,
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .text {
+  line-height: 1.6;
+}
+
+/* ── 打印 ───────────────────────────────────────────────────
+ * 中文团队常把文档打印成 PDF 交付，顺手做点适配。
+ */
+@media print {
+  .VPNav,
+  .VPSidebar,
+  .VPLocalNav,
+  .VPFooter {
+    display: none !important;
+  }
+
+  .vp-doc {
+    max-width: none;
+    font-size: 12pt;
+  }
+}

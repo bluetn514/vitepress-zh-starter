@@ -1,0 +1,20 @@
+# 统一换行符，避免 Windows 与 macOS/Linux 协作者之间产生整文件 diff
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# 这些文件必须在 Windows 上保持 CRLF 才能正常使用
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# 让 GitHub 语言统计正确识别
+*.md linguist-documentation
+docs/** linguist-documentation

@@ -1,0 +1,20 @@
+{
+  "name": "vitepress-zh-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "面向中文开源项目的 VitePress 文档站起步模板：中文排版、导航、搜索、部署开箱即用",
+  "type": "module",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "clean": "rimraf docs/.vitepress/dist docs/.vitepress/cache"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

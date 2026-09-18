@@ -1,0 +1,33 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 本机调试时重定向的包管理器目录（非项目内容）
+.npm-cache/
+.pnpm-home/
+.pnpm-xdg-cache/
+.pnpm-xdg-data/
+.pnpm-xdg-config/
+.verify/
+
+# 构建产物与缓存
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# 本地环境变量
+.env
+.env.local
+.env.*.local
+
+# 编辑器与系统
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*
+pnpm-debug.log*
