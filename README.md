@@ -143,10 +143,22 @@ themeConfig: {
 | `pnpm build` | 构建静态文件（含死链检测） |
 | `pnpm preview` | 本地预览构建结果，验证 `base` 路径 |
 
-## 发布到 GitHub
+## 发布与部署
 
-完整的从零发布流程见 [PUBLISHING.md](PUBLISHING.md)：环境准备、认证配置、
-仓库创建、推送、开启自动部署、Topics 设置、排错表、发布前检查清单。
+本仓库已初始化并完成首次提交，只需推送：
+
+```bash
+git push -u origin main
+```
+
+站点地址（开启 Pages 后）：
+
+```text
+https://bluetn514.github.io/vitepress-zh-starter/
+```
+
+完整的从零发布流程见 [PUBLISHING.md](PUBLISHING.md)：
+认证配置、仓库创建、Pages 开启、Topics 设置、排错表。
 
 ## 设计取舍
 
