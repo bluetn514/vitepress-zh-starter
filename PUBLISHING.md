@@ -83,7 +83,7 @@ ssh -T git@github.com
 3. **Description**：`面向中文开源项目的 VitePress 文档站模板，中文排版开箱即用`
 4. 选择 **Public**（公开才有人能看到和 fork）
 5. **不要**勾选 Add README / .gitignore / license
-   —— 本地已经有了，勾了会导致推送时冲突
+   （本地已经有了，勾了会导致推送时冲突）
 6. 点击 **Create repository**
 
 创建后会看到一个空仓库页面，记下里面的地址，形如：

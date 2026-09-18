@@ -2,32 +2,56 @@
 
 这一页带你用最短路径把模板变成自己的文档站。全程约 15 分钟。
 
-## 第一步：改站点信息
+## 第一步：写站点信息
+
+### 改配置
 
 打开 `docs/.vitepress/config.mts`，替换这几处：
 
 ```ts
 export default defineConfig({
-  title: '项目名',                    // ← 改成你的项目名
-  description: '一句话描述',           // ← 改成你的描述
+  title: '你的项目名',
+  description: '一句话描述',
   // ...
   themeConfig: {
     nav: [ /* 顶部导航，按你的文档结构调整 */ ],
     sidebar: [ /* 侧边栏 */ ],
     editLink: {
-      pattern: 'https://github.com/<用户名>/<仓库名>/edit/main/docs/:path'
+      pattern: 'https://github.com/你的用户名/你的仓库名/edit/main/docs/:path'
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/<用户名>/<仓库名>' }
+      { icon: 'github', link: 'https://github.com/你的用户名/你的仓库名' }
     ]
   }
 })
 ```
 
 ::: tip 先跑起来再改
-建议顺序是：先 `pnpm dev` 看到页面，再边改边看效果。
-一次性改完十几处再启动，报错了不好定位。
+建议先 `pnpm dev` 看到页面，再边改边看效果。
+一次改完十几处再启动，报错了不好定位。
 :::
+
+### 写简介和描述
+
+`description` 和简介页是读者最先看到的内容，值得多花几分钟。
+
+常见写法是同义堆砌：
+
+> XXX 是一个强大、灵活、高性能的现代化工具。
+
+读者看完不知道它到底能干什么。换成具体的输入、输出和数字：
+
+> XXX 把 Markdown 表格转换成可交互的 HTML 表格，
+> 支持排序、筛选和导出 Excel，体积不到 10 KB。
+
+顺带把**不做什么**也写清楚。这能减少相当一部分无效 issue：
+
+```md
+- 做：把 Markdown 转成 HTML
+- 做：导出 Excel
+- 不做：所见即所得编辑器
+- 不做：服务端渲染
+```
 
 ## 第二步：确定你的文档结构
 
@@ -59,7 +83,7 @@ docs/
 layout: home
 
 hero:
-  name: 项目名
+  name: 你的项目名
   text: 一句话讲清核心价值
   tagline: 面向谁、解决什么问题
   actions:
